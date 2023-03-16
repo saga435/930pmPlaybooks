@@ -1,0 +1,29 @@
+---
+# tasks file for setup-apache-role
+
+- name: Install java on RedHat
+  yum:
+    state: installed
+  when: ansible_os_family== "RedHat"
+
+- name: Extract Tomcat
+  unarchive:
+    src: /opt/apache-tomcat-8.5.87.tar.gz
+    dest: /opt
+    remote_src: yes 
+
+
+ - name: Install java on Debian
+   apt:
+       name: default-jdk
+       state: present
+   when: ansible_os_family== "Debian"
+
+
+ - name: copy index.html
+   copy:
+      src: /home/ansadmin/playbook/index.html
+      dest: /var/www/html
+      mode: 0666
+      
+
